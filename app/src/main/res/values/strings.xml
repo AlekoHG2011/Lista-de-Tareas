@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Wish list</string>
+
+    <!-- Splash activity -->
+
+    <string name="poweredby">DESARROLLADO POR Alejandro Hechavarria Gonzalez</string>
+    <string name="porciento">0 %</string>
+    <string name="loading">Cargando ...         </string>
 </resources>
