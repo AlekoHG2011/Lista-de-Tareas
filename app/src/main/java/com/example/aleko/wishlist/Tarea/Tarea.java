@@ -1,4 +1,4 @@
-package com.example.aleko.wishlist.Tarea.Model;
+package com.example.aleko.wishlist.Tarea;
 
 import android.content.Context;
 
@@ -13,6 +13,8 @@ import org.json.JSONException;
 
 public class Tarea extends Database {
 
+    private static String table = "tarea";
+
     private Context context;
     private Integer id;
     private String titulo;
@@ -23,6 +25,7 @@ public class Tarea extends Database {
     private String autor;
     private String proyecto;
     private String estado;
+
 
     public Tarea(Context context1) {
         super(context1);
@@ -123,5 +126,11 @@ public class Tarea extends Database {
                 "ORDER BY tarea.id ASC";
         return this.get_results_from_query();
 
+    }
+
+    public void Delete() {
+        if (this.id != null) {
+            this.Delete(this.table, "id=" + this.id);
+        }
     }
 }

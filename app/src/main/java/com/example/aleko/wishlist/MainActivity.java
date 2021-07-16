@@ -1,6 +1,7 @@
 package com.example.aleko.wishlist;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.view.View;
 
 import com.example.aleko.wishlist.Adapter.RecyclerViewAdapter;
-import com.example.aleko.wishlist.Tarea.Model.Tarea;
+import com.example.aleko.wishlist.Tarea.Tarea;
+import com.example.aleko.wishlist.Tarea.TareaActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,16 +43,20 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        moveTop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        moveTop.setOnClickListener(v -> {
 
-                //rvTaskList = (RecyclerView) findViewById(R.id.rvMascotas);
-                rvTaskList.smoothScrollToPosition(0);
-            }
+            //rvTaskList = (RecyclerView) findViewById(R.id.rvMascotas);
+            rvTaskList.smoothScrollToPosition(0);
+        });
+
+        fabAddTask.setOnClickListener(v -> {
+
+            startActivity(new Intent(MainActivity.this, TareaActivity.class));
+
         });
 
         rvTaskList.setLayoutManager(llm);
+
         InicializarListaTareas();
         InicializarAdaptador();
     }

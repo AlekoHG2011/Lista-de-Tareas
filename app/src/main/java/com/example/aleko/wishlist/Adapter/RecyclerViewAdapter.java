@@ -10,8 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.aleko.wishlist.MainActivity;
 import com.example.aleko.wishlist.R;
-import com.example.aleko.wishlist.Tarea.Model.Tarea;
+import com.example.aleko.wishlist.Tarea.Tarea;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull final TareaRecyclerHolder tareaHolder, final int position) {
 
-        final Tarea tarea = tareas.get(position);
+        Tarea tarea = tareas.get(position);
 
         tareaHolder.tvTitulo.setText(tarea.getTitulo());
         tareaHolder.tvDescripcion.setText(tarea.getDescripcion());
@@ -49,7 +50,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         tareaHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "Eliminar la Tarea:" + tarea.getTitulo(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Eliminar la " + tarea.getTitulo(), Toast.LENGTH_SHORT).show();
+
+                tarea.Delete();
 
             }
         });
