@@ -1,14 +1,12 @@
 package com.example.aleko.wishlist.Adapter;
 
 import android.app.Activity;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,13 +14,14 @@ import com.example.aleko.wishlist.R;
 import com.example.aleko.wishlist.Tarea.Tarea;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+
+/**
+ * Created by Aleko on 15/07/2021.
+ */
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TareaRecyclerHolder> {
 
     ArrayList<Tarea> tareas;
-    ArrayList<Tarea> originalTareas;
     Activity activity;
 
     public RecyclerViewAdapter(ArrayList<Tarea> tareas, Activity activity) {
