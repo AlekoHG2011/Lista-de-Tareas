@@ -11,9 +11,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Environment;
 
+import com.example.aleko.wishlist.Tarea.Model.Tarea;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public abstract class Database extends SQLiteOpenHelper {
 
@@ -87,5 +91,8 @@ public abstract class Database extends SQLiteOpenHelper {
         this.getWritableDatabase().delete(table, whereClause, null);
         this.getWritableDatabase().close();
     }
+
+    //# método abstracto para que las clases que heredan
+    abstract protected JSONArray Listar() throws JSONException;
 
 }

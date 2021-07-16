@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.aleko.wishlist.R;
-import com.example.aleko.wishlist.Tarea.Tarea;
+import com.example.aleko.wishlist.Tarea.Model.Tarea;
 
 import java.util.ArrayList;
 
@@ -57,7 +57,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return tareas.size();
+
+        if (tareas.isEmpty())
+            return 0;
+        else
+            return tareas.size();
     }
 
     public void filter(final String strSearch) {

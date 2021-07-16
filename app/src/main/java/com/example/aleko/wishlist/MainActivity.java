@@ -1,6 +1,8 @@
 package com.example.aleko.wishlist;
 
+import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +11,10 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 
 import com.example.aleko.wishlist.Adapter.RecyclerViewAdapter;
-import com.example.aleko.wishlist.Tarea.Tarea;
+import com.example.aleko.wishlist.Tarea.Model.Tarea;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -21,10 +26,15 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fabAddTask, moveTop;
     public RecyclerViewAdapter adaptador;
 
+    private Tarea tarea;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        tarea = new Tarea(this);
+        tareas = new ArrayList<Tarea>();
 
         InitViews();
 
@@ -62,19 +72,46 @@ public class MainActivity extends AppCompatActivity {
 
     public ArrayList<Tarea> InicializarListaTareas() {
 
-        tareas = new ArrayList<Tarea>();
+        try {
 
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
-        tareas.add(new Tarea(1, "Test", "asd", 1, "2021-07-15", "Yo", "yo", 1, 1));
+            JSONArray jsonArrayTareas = tarea.Listar();
+
+            if (jsonArrayTareas != null) {
+
+                for (int i = 0; i < jsonArrayTareas.length(); i++) {
+
+                    //tareas.add(jsonArrayTareas.getJSONObject(i));
+                }
+            } else {
+
+                ShowEmptyTaskListDialog();
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return tareas;
+    }
+
+    public void ShowEmptyTaskListDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Alerta");
+        builder.setIcon(R.drawable.warning_yellow);
+        builder.setMessage("No exiten Tareas registradas.");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 }
