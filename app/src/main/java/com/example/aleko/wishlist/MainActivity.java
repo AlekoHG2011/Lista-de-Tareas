@@ -15,6 +15,7 @@ import com.example.aleko.wishlist.Tarea.Model.Tarea;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -80,7 +81,20 @@ public class MainActivity extends AppCompatActivity {
 
                 for (int i = 0; i < jsonArrayTareas.length(); i++) {
 
-                    //tareas.add(jsonArrayTareas.getJSONObject(i));
+                    tarea = new Tarea(this);
+
+                    JSONObject obj = jsonArrayTareas.getJSONObject(i);
+                    tarea.setId(obj.getInt("id"));
+                    tarea.setTitulo(obj.getString("titulo"));
+                    tarea.setDescripcion(obj.getString("descripcion"));
+                    tarea.setTipoTarea(obj.getString("tipoTarea"));
+                    tarea.setFecha(obj.getString("fecha"));
+                    tarea.setResponsable(obj.getString("responsable"));
+                    tarea.setAutor(obj.getString("autor"));
+                    tarea.setProyecto(obj.getString("proyecto"));
+                    tarea.setEstado(obj.getString("estado"));
+
+                    tareas.add(tarea);
                 }
             } else {
 

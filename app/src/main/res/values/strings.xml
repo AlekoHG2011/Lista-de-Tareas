@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wish list</string>
+    <string name="app_name">Lista de Tareas</string>
 
     <!-- Splash activity -->
     <string name="poweredby">DESARROLLADO POR Alejandro Hechavarria Gonzalez</string>

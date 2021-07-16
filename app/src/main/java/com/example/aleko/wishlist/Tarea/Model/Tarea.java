@@ -118,9 +118,9 @@ public class Tarea extends Database {
 
         // TODO Auto-generated method stub
         this.query = "SELECT tarea.id, tarea.titulo, tarea.descripcion, tarea.tipoTarea,\n" +
-                "tarea.fecha, tarea.reponsable, tarea.autor, tarea.proyecto, tarea.estado\n" +
+                "tarea.fecha, tarea.responsable, tarea.autor, tarea.proyecto, tarea.estado\n" +
                 "FROM tarea\n" +
-                "ORDER BY tarea.id DESC";
+                "ORDER BY tarea.id ASC";
         return this.get_results_from_query();
 
     }
