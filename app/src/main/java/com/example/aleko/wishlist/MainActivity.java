@@ -49,11 +49,8 @@ public class MainActivity extends AppCompatActivity {
             rvTaskList.smoothScrollToPosition(0);
         });
 
-        fabAddTask.setOnClickListener(v -> {
-
-            startActivity(new Intent(MainActivity.this, TareaActivity.class));
-
-        });
+        fabAddTask.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, TareaActivity.class)));
 
         rvTaskList.setLayoutManager(llm);
 
@@ -92,11 +89,14 @@ public class MainActivity extends AppCompatActivity {
                     tarea.setId(obj.getInt("id"));
                     tarea.setTitulo(obj.getString("titulo"));
                     tarea.setDescripcion(obj.getString("descripcion"));
+                    tarea.setIdTipoTarea(Integer.valueOf(obj.getString("idTipoTarea")));
                     tarea.setTipoTarea(obj.getString("tipoTarea"));
                     tarea.setFecha(obj.getString("fecha"));
                     tarea.setResponsable(obj.getString("responsable"));
                     tarea.setAutor(obj.getString("autor"));
+                    tarea.setIdProyecto(Integer.valueOf(obj.getString("idProyecto")));
                     tarea.setProyecto(obj.getString("proyecto"));
+                    tarea.setIdEstado(Integer.valueOf(obj.getString("idEstado")));
                     tarea.setEstado(obj.getString("estado"));
 
                     tareas.add(tarea);

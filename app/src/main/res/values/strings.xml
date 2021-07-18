@@ -8,4 +8,19 @@
 
     <!-- MainActivity -->
     <string name="searchHint">Buscar por Título</string>
+
+    <string name="addTask">Insertar Tarea</string>
+
+    <string name="titulo">Título</string>
+    <string name="descripcion">Descripción</string>
+    <string name="tipo">Tipo</string>
+    <string name="fecha">Fecha de Cumplimiento</string>
+    <string name="responsable">Responsable</string>
+    <string name="autor">Autor</string>
+    <string name="proyecto">Proyecto</string>
+    <string name="estado">Estado</string>
+
+    <string name="seleccionar">Seleccionar</string>
+    <string name="insert">Guardar</string>
+    <string name="cancel">Cancelar</string>
 </resources>

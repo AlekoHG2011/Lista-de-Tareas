@@ -1,5 +1,6 @@
 package com.example.aleko.wishlist.Tarea;
 
+import android.content.ContentValues;
 import android.content.Context;
 
 import com.example.aleko.wishlist.DB.Database;
@@ -19,11 +20,14 @@ public class Tarea extends Database {
     private Integer id;
     private String titulo;
     private String descripcion;
+    private Integer idTipoTarea;
     private String tipoTarea;
     private String fecha;
     private String responsable;
     private String autor;
+    private Integer idProyecto;
     private String proyecto;
+    private Integer idEstado;
     private String estado;
 
 
@@ -34,11 +38,14 @@ public class Tarea extends Database {
         this.id = null;
         this.titulo = null;
         this.descripcion = null;
+        this.idTipoTarea = null;
         this.tipoTarea = null;
         this.fecha = null;
         this.responsable = null;
         this.autor = null;
+        this.idProyecto = null;
         this.proyecto = null;
+        this.idEstado = null;
         this.estado = null;
 
         this.context = context1;
@@ -116,12 +123,39 @@ public class Tarea extends Database {
         this.estado = estado;
     }
 
+    public Integer getIdTipoTarea() {
+        return idTipoTarea;
+    }
+
+    public void setIdTipoTarea(Integer idTipoTarea) {
+        this.idTipoTarea = idTipoTarea;
+    }
+
+    public Integer getIdProyecto() {
+        return idProyecto;
+    }
+
+    public void setIdProyecto(Integer idProyecto) {
+        this.idProyecto = idProyecto;
+    }
+
+    public Integer getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
+
     @Override
     public JSONArray Listar() throws JSONException {
 
         // TODO Auto-generated method stub
-        this.query = "SELECT tarea.id, tarea.titulo, tarea.descripcion, tarea.tipoTarea,\n" +
-                "tarea.fecha, tarea.responsable, tarea.autor, tarea.proyecto, tarea.estado\n" +
+        this.query = "SELECT tarea.id, tarea.titulo, tarea.descripcion, tarea.idTipoTarea,\n" +
+                "tarea.fecha, tarea.responsable, tarea.autor, tarea.idProyecto, tarea.idEstado,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Tipo de Tarea' AND nomenclador.id = tarea.idTipoTarea) AS tipoTarea,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Proyecto' AND nomenclador.id = tarea.idProyecto) AS proyecto,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Estado' AND nomenclador.id = tarea.idEstado) AS estado\n" +
                 "FROM tarea\n" +
                 "ORDER BY tarea.id ASC";
         return this.get_results_from_query();
@@ -132,5 +166,19 @@ public class Tarea extends Database {
         if (this.id != null) {
             this.Delete(this.table, "id=" + this.id);
         }
+    }
+
+    public void Insert() {
+        ContentValues valores = new ContentValues();
+
+        valores.put("titulo", this.titulo);
+        valores.put("descripcion", this.descripcion);
+        valores.put("idTipoTarea", this.idTipoTarea);
+        valores.put("fecha", this.fecha.toString());
+        valores.put("responsable", this.responsable);
+        valores.put("autor", this.autor);
+        valores.put("idProyecto", this.idProyecto);
+        valores.put("idEstado", this.idEstado);
+        this.Insert(this.table, valores);
     }
 }

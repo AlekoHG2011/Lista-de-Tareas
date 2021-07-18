@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/meTituloPersonalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/meTitulo"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:text="PRUEBA"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/subTituloPersonalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/meTitulo"
+        android:textColor="#3FCBEF"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp"
+        android:text="PRUEBA"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="5dp"
+        android:textAppearance="?android:attr/textAppearanceSearchResultSubtitle" />
+
+
+</LinearLayout>
