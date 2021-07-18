@@ -61,6 +61,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 tarea.Delete();
 
+                for (int i = 0; i < tareas.size(); i++) {
+                    if (tareas.get(i).getId() == tarea.getId()) {
+                        tareas.remove(i);
+                        break;
+                    }
+                }
+
+                notifyDataSetChanged();
             }
         });
     }
