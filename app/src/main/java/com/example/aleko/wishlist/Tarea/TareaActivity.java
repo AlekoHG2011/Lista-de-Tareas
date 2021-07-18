@@ -1,8 +1,8 @@
 package com.example.aleko.wishlist.Tarea;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.aleko.wishlist.GenericComponents.MySpiner;
 import com.example.aleko.wishlist.MainActivity;
 import com.example.aleko.wishlist.R;
+
+import java.util.Calendar;
 
 /**
  * Created by Aleko on 16/07/2021.
@@ -28,6 +30,8 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
 
     private String titulo, descripcion, fecha, responsable, autor, tipo, proyecto, estado;
     private Integer idTipoTarea, idProyecto, idEstado;
+
+    DatePickerDialog pickerDialog;
 
     private static final String REQUIRED_MSG = "Rellene este campo";
 
@@ -56,6 +60,16 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
                 InsertFormData();
                 startActivity(new Intent(TareaActivity.this, MainActivity.class));
 
+            }
+        });
+
+        tietFecha.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                ShowDatePicker();
             }
         });
     }
@@ -121,6 +135,19 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
         }
 
         return true;
+    }
+
+    public void ShowDatePicker() {
+
+        final Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH);
+        int year = calendar.get(Calendar.YEAR);
+
+        pickerDialog = new DatePickerDialog(TareaActivity.this,
+                (view, year1, monthOfYear, dayOfMonth) ->
+                        tietFecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1), year, month, day);
+        pickerDialog.show();
     }
 
     @Override
