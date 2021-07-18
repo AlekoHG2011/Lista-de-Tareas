@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList<Tarea> tareas;
     private RecyclerView rvTaskList;
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         InicializarListaTareas();
         InicializarAdaptador();
+        InicializarListener();
     }
 
     private void InitViews() {
@@ -131,6 +132,26 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+
+    }
+
+    private void InicializarListener() {
+        svSearch.setOnQueryTextListener(this);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adaptador.filter(newText);
+        return false;
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

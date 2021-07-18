@@ -1,6 +1,7 @@
 package com.example.aleko.wishlist.Adapter;
 
 import android.app.Activity;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +16,8 @@ import com.example.aleko.wishlist.R;
 import com.example.aleko.wishlist.Tarea.Tarea;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Aleko on 15/07/2021.
@@ -22,6 +25,8 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TareaRecyclerHolder> {
 
+    private List<Tarea> items;
+    private List<Tarea> originalItems;
     ArrayList<Tarea> tareas;
     Activity activity;
 
@@ -29,6 +34,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         this.tareas = tareas;
         this.activity = activity;
+        this.originalItems = new ArrayList<>();
+        originalItems.addAll(tareas);
     }
 
     @NonNull
@@ -68,7 +75,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void filter(final String strSearch) {
+        if (strSearch.length() == 0) {
+            tareas.clear();
+            tareas.addAll(originalItems);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                tareas.clear();
+                List<Tarea> collect = originalItems.stream()
+                        .filter(i -> i.getTitulo().toLowerCase().contains(strSearch))
+                        .collect(Collectors.toList());
 
+                tareas.addAll(collect);
+            } else {
+                tareas.clear();
+                for (Tarea i : originalItems) {
+                    if (i.getTitulo().toLowerCase().contains(strSearch)) {
+                        tareas.add(i);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
 
