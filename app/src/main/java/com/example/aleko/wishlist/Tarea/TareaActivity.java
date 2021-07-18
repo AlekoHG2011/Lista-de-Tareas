@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.aleko.wishlist.GenericComponents.MySpiner;
 import com.example.aleko.wishlist.MainActivity;
@@ -28,6 +29,8 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
     private String titulo, descripcion, fecha, responsable, autor, tipo, proyecto, estado;
     private Integer idTipoTarea, idProyecto, idEstado;
 
+    private static final String REQUIRED_MSG = "Rellene este campo";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +47,16 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
 
         btnGuardar.setOnClickListener(view -> {
 
-            InsertFormData();
-            startActivity(new Intent(TareaActivity.this, MainActivity.class));
+            if (!HasText(tietTitulo) || !HasText(tietDescripcion) || !HasText(tietFecha) || !HasText(tietResponsable) || !HasText(tietAutor)) {
 
+                Toast.makeText(this, "Registre los campos vacíos.", Toast.LENGTH_LONG).show();
+
+            } else {
+
+                InsertFormData();
+                startActivity(new Intent(TareaActivity.this, MainActivity.class));
+
+            }
         });
     }
 
@@ -97,6 +107,20 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
         tarea.setIdEstado(idEstado);
 
         tarea.Insert();
+    }
+
+    public boolean HasText(EditText editText) {
+
+        String text = editText.getText().toString().trim();
+        editText.setError(null);
+
+        if (text.length() == 0) {
+
+            editText.setError(REQUIRED_MSG);
+            return false;
+        }
+
+        return true;
     }
 
     @Override
