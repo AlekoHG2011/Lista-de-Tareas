@@ -15,6 +15,10 @@ import com.example.aleko.wishlist.GenericComponents.MySpiner;
 import com.example.aleko.wishlist.MainActivity;
 import com.example.aleko.wishlist.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 
 /**
@@ -29,7 +33,8 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
     private Tarea tarea;
 
     private String titulo, descripcion, fecha, responsable, autor, tipo, proyecto, estado;
-    private Integer idTipoTarea, idProyecto, idEstado;
+    private Integer idTipoTarea, idProyecto, idEstado, idTarea;
+    private String operacion;
 
     DatePickerDialog pickerDialog;
 
@@ -40,28 +45,57 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
 
-        this.setTitle("Adicionar Tarea");
+        operacion = getIntent().getStringExtra("editar");
 
         tarea = new Tarea(this);
 
         InitViews();
 
+        if (operacion.equals("true")) {
+
+            this.setTitle("Modificar Tarea");
+
+            idTarea = Integer.valueOf(getIntent().getStringExtra("idTarea"));
+
+            GetSetTaskData(idTarea);
+
+            btnGuardar.setText("Actualizar");
+
+            btnGuardar.setOnClickListener(view -> {
+
+                if (!HasText(tietTitulo) || !HasText(tietDescripcion) || !HasText(tietFecha) || !HasText(tietResponsable) || !HasText(tietAutor)) {
+
+                    Toast.makeText(this, "Registre los campos vacíos.", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    UpdateFormData(idTarea);
+                    startActivity(new Intent(TareaActivity.this, MainActivity.class));
+
+                }
+            });
+
+        } else {
+
+            this.setTitle("Adicionar Tarea");
+
+            btnGuardar.setOnClickListener(view -> {
+
+                if (!HasText(tietTitulo) || !HasText(tietDescripcion) || !HasText(tietFecha) || !HasText(tietResponsable) || !HasText(tietAutor)) {
+
+                    Toast.makeText(this, "Registre los campos vacíos.", Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    InsertFormData();
+                    startActivity(new Intent(TareaActivity.this, MainActivity.class));
+
+                }
+            });
+        }
+
         btnCancelar.setOnClickListener(view ->
                 startActivity(new Intent(TareaActivity.this, MainActivity.class)));
-
-        btnGuardar.setOnClickListener(view -> {
-
-            if (!HasText(tietTitulo) || !HasText(tietDescripcion) || !HasText(tietFecha) || !HasText(tietResponsable) || !HasText(tietAutor)) {
-
-                Toast.makeText(this, "Registre los campos vacíos.", Toast.LENGTH_LONG).show();
-
-            } else {
-
-                InsertFormData();
-                startActivity(new Intent(TareaActivity.this, MainActivity.class));
-
-            }
-        });
 
         tietFecha.setOnClickListener(new View.OnClickListener() {
 
@@ -72,6 +106,33 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
                 ShowDatePicker();
             }
         });
+    }
+
+    public void GetSetTaskData(Integer idTarea) {
+
+        try {
+
+            JSONArray jsonArrayTarea = tarea.ListarById(idTarea);
+
+            if (jsonArrayTarea != null) {
+
+                JSONObject obj = jsonArrayTarea.getJSONObject(0);
+
+                tietTitulo.setText(obj.getString("titulo"));
+                tietDescripcion.setText(obj.getString("descripcion"));
+                tietFecha.setText(obj.getString("fecha"));
+                tietResponsable.setText(obj.getString("responsable"));
+                tietAutor.setText(obj.getString("autor"));
+
+                spTipo.selectText(obj.getString("tipoTarea"));
+                spProyecto.selectText(obj.getString("proyecto"));
+                spEstado.selectText(obj.getString("estado"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private void InitViews() {
@@ -121,6 +182,32 @@ public class TareaActivity extends AppCompatActivity implements View.OnClickList
         tarea.setIdEstado(idEstado);
 
         tarea.Insert();
+    }
+
+    private void UpdateFormData(Integer idTarea) {
+
+        titulo = tietTitulo.getText().toString();
+        descripcion = tietDescripcion.getText().toString();
+        fecha = tietFecha.getText().toString();
+        responsable = tietResponsable.getText().toString();
+        autor = tietAutor.getText().toString();
+
+        idTipoTarea = Integer.valueOf(spTipo.getIdSpinner());
+        idProyecto = Integer.valueOf(spProyecto.getIdSpinner());
+        idEstado = Integer.valueOf(spEstado.getIdSpinner());
+
+        tarea.setId(idTarea);
+        tarea.setTitulo(titulo);
+        tarea.setDescripcion(descripcion);
+        tarea.setFecha(fecha);
+        tarea.setResponsable(responsable);
+        tarea.setAutor(autor);
+
+        tarea.setIdTipoTarea(idTipoTarea);
+        tarea.setIdProyecto(idProyecto);
+        tarea.setIdEstado(idEstado);
+
+        tarea.Update();
     }
 
     public boolean HasText(EditText editText) {

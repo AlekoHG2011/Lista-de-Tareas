@@ -162,6 +162,20 @@ public class Tarea extends Database {
 
     }
 
+    public JSONArray ListarById(Integer idTarea) throws JSONException {
+
+        // TODO Auto-generated method stub
+        this.query = "SELECT tarea.id, tarea.titulo, tarea.descripcion, tarea.idTipoTarea,\n" +
+                "tarea.fecha, tarea.responsable, tarea.autor, tarea.idProyecto, tarea.idEstado,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Tipo de Tarea' AND nomenclador.id = tarea.idTipoTarea) AS tipoTarea,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Proyecto' AND nomenclador.id = tarea.idProyecto) AS proyecto,\n" +
+                "(SELECT nomenclador.nombre FROM nomenclador INNER JOIN tiponomenclador on tiponomenclador.id = nomenclador.idtipo WHERE tiponomenclador.nombre = 'Estado' AND nomenclador.id = tarea.idEstado) AS estado\n" +
+                "FROM tarea\n" +
+                "WHERE tarea.id = " + idTarea;
+        return this.get_results_from_query();
+
+    }
+
     public void Delete() {
         if (this.id != null) {
             this.Delete(this.table, "id=" + this.id);
@@ -180,5 +194,28 @@ public class Tarea extends Database {
         valores.put("idProyecto", this.idProyecto);
         valores.put("idEstado", this.idEstado);
         this.Insert(this.table, valores);
+    }
+
+    public void Update() {
+        if (this.id != null) {
+            ContentValues valores = new ContentValues();
+            if (titulo != null)
+                valores.put("titulo", this.titulo);
+            if (descripcion != null)
+                valores.put("descripcion", this.descripcion);
+            if (idTipoTarea != null)
+                valores.put("idTipoTarea", this.idTipoTarea);
+            if (fecha != null)
+                valores.put("fecha", this.fecha.toString());
+            if (responsable != null)
+                valores.put("responsable", this.responsable);
+            if (autor != null)
+                valores.put("autor", this.autor);
+            if (idProyecto != null)
+                valores.put("idProyecto", this.idProyecto);
+            if (idEstado != null)
+                valores.put("idEstado", this.idEstado);
+            this.Edit(this.table, valores, "id=" + this.getId());
+        }
     }
 }

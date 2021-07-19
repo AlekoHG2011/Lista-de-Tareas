@@ -49,14 +49,20 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             rvTaskList.smoothScrollToPosition(0);
         });
 
-        fabAddTask.setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, TareaActivity.class)));
+        fabAddTask.setOnClickListener(v -> {
+
+            Intent intent = new Intent(MainActivity.this, TareaActivity.class);
+            intent.putExtra("editar", "false");
+            startActivity(intent);
+
+        });
 
         rvTaskList.setLayoutManager(llm);
 
         InicializarListaTareas();
         InicializarAdaptador();
         InicializarListener();
+
     }
 
     private void InitViews() {
