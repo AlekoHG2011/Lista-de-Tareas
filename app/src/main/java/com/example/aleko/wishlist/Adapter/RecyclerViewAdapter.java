@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.aleko.wishlist.MainActivity;
 import com.example.aleko.wishlist.R;
+import com.example.aleko.wishlist.Tarea.DetalleTareaActivity;
 import com.example.aleko.wishlist.Tarea.Tarea;
 import com.example.aleko.wishlist.Tarea.TareaActivity;
 
@@ -100,7 +101,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private Context context;
         private TextView tvTitulo;
         private TextView tvDescripcion;
-        private ImageButton btnDelete, btnEdit;
+        private ImageButton btnDelete, btnEdit, btnDetails;
 
         public TareaRecyclerHolder(View itemView) {
             super(itemView);
@@ -111,16 +112,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnEdit = itemView.findViewById(R.id.btnEdit);
+            btnDetails = itemView.findViewById(R.id.btnDetails);
         }
 
         public void setOnClickListeners() {
 
             btnDelete.setOnClickListener(this);
             btnEdit.setOnClickListener(this);
+            btnDetails.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+
+            Intent intent;
 
             switch (view.getId()) {
                 case R.id.btnDelete:
@@ -141,13 +146,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     break;
                 case R.id.btnEdit:
 
-                    Intent intent = new Intent(context, TareaActivity.class);
+                    intent = new Intent(context, TareaActivity.class);
                     intent.putExtra("editar", "true");
                     intent.putExtra("idTarea", tarea.getId().toString());
                     context.startActivity(intent);
 
                     break;
 
+                case R.id.btnDetails:
+                    intent = new Intent(context, DetalleTareaActivity.class);
+                    intent.putExtra("idTarea", tarea.getId().toString());
+                    context.startActivity(intent);
+
+                    break;
             }
         }
     }
