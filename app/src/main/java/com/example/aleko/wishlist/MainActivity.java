@@ -68,6 +68,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private void InitViews() {
         rvTaskList = findViewById(R.id.rvTaskList);
         svSearch = findViewById(R.id.svSearch);
+        svSearch.requestFocusFromTouch();
+        svSearch.setIconified(false);
+        svSearch.clearFocus();
 
         fabAddTask = findViewById(R.id.fabAddTask);
         moveTop = findViewById(R.id.fabMoveToTop);
